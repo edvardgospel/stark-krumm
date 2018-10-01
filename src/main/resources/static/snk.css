@@ -58,7 +58,7 @@ body {
   font-weight: 400;
 }
 
-fieldset {
+fieldset, select, option {
   border: medium none !important;
   margin: 0 0 10px;
   min-width: 100%;
