@@ -12,7 +12,7 @@ import java.io.IOException;
 @Controller
 public class SnkController {
 
-    @Autowired
+
     SnkService excelCreatorService;
 
     @RequestMapping(value = "/")
