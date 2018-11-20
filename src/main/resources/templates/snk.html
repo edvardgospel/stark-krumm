@@ -1,48 +1,58 @@
-<!DOCTYPE html>
-
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-
-    <title>The HTML5 Herald</title>
+    <title>SNK</title>
     <meta name="description" content="Stark and Krumm">
     <meta name="author" content="Edvard Eros">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
     <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
 </head>
-
 <body>
 <div class="container">
-    <form id="contact" action="/send" method="post">
+    <form id="contact" action="/send" method="post" enctype="application/json">
         <h3>Stark and Krumm</h3>
-        <h4>Contact us for custom quote</h4>
-        <select name ="selectValue">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-        </select>
         <fieldset>
-            <input placeholder="Your name" type="text" tabindex="1" required autofocus>
+            <input placeholder="Numar foaie:" type="text" required autofocus>
         </fieldset>
         <fieldset>
-            <input placeholder="Your Email Address" type="email" tabindex="2" required>
+            <select name="selectValue">
+                <option th:value="8">SM-08-SNK</option>
+                <option th:value="9">SM-09-SNK</option>
+                <option th:value="11">SM-11-SNK</option>
+                <option th:value="12">SM-12-SNK</option>
+                <option th:value="14">SM-14-SNK</option>
+                <option th:value="15">SM-15-SNK</option>
+                <option th:value="16">SM-16-SNK</option>
+            </select>
         </fieldset>
         <fieldset>
-            <input placeholder="Your Phone Number (optional)" type="tel" tabindex="3" required>
+            <select name="selectValue">
+                <option value="Jozsi">Jozsi</option>
+                <option value="Karcsi">Karcsi</option>
+                <option value="Ervin">Ervin</option>
+                <option value="Ema">Ema</option>
+                <option value="Szebi">Szebi</option>
+            </select>
         </fieldset>
         <fieldset>
-            <input placeholder="Your Web Site (optional)" type="url" tabindex="4" required>
+            <span>Pornire:</span>
+            <input type="datetime-local" name="departureDateTime" required>
         </fieldset>
         <fieldset>
-            <textarea placeholder="Type your message here...." tabindex="5" required></textarea>
+            <span>Sosire</span>
+            <input type="datetime-local" name="arrivalDateTime" required>
         </fieldset>
         <fieldset>
-            <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+            <input placeholder="Kilometri" type="number" required>
         </fieldset>
-        <p class="copyright">Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>
-        </p>
+        <fieldset>
+            <input placeholder="Consum" type="number" required>
+        </fieldset>
+        <fieldset>
+            <button name="submit" type="submit" id="submit">Submit</button>
+        </fieldset>
     </form>
 </div>
 </body>

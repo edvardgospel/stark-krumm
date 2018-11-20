@@ -1,5 +1,6 @@
 package com.snk.starkkrumm.service;
 
+import com.snk.starkkrumm.model.Road;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,11 +18,11 @@ public class SnkService {
 
     //
 
-    public void instertData(String data) throws IOException {
+    public void instertData(Road road) throws IOException {
        // dataValidationService.validate(data);
         Row row = sheet.createRow(0);
         row.createCell(0).setCellValue("ezaz");
-        row.createCell(1).setCellValue(data);
+        //row.createCell(1).setCellValue(data);
         saveDataToExcel();
     }
 
