@@ -11,13 +11,13 @@
 </head>
 <body>
 <div class="container">
-    <form id="contact" action="/send" method="post" enctype="application/json">
+    <form id="contact" action="/send" method="post">
         <h3>Stark and Krumm</h3>
         <fieldset>
-            <input placeholder="Numar foaie:" type="text" required autofocus>
+            <input placeholder="Numar foaie:" type="number" name="roadNumber" required autofocus>
         </fieldset>
         <fieldset>
-            <select name="selectValue">
+            <select name="carNumber">
                 <option th:value="8">SM-08-SNK</option>
                 <option th:value="9">SM-09-SNK</option>
                 <option th:value="11">SM-11-SNK</option>
@@ -28,7 +28,7 @@
             </select>
         </fieldset>
         <fieldset>
-            <select name="selectValue">
+            <select name="driverName">
                 <option value="Jozsi">Jozsi</option>
                 <option value="Karcsi">Karcsi</option>
                 <option value="Ervin">Ervin</option>
@@ -38,17 +38,17 @@
         </fieldset>
         <fieldset>
             <span>Pornire:</span>
-            <input type="datetime-local" name="departureDateTime" required>
+            <input type="datetime-local" name="departure" required>
         </fieldset>
         <fieldset>
             <span>Sosire</span>
-            <input type="datetime-local" name="arrivalDateTime" required>
+            <input type="datetime-local" name="arrival" required>
         </fieldset>
         <fieldset>
-            <input placeholder="Kilometri" type="number" required>
+            <input placeholder="Kilometri" type="number" name="distance" required>
         </fieldset>
         <fieldset>
-            <input placeholder="Consum" type="number" required>
+            <input placeholder="Consum" type="number" name="consumption" required>
         </fieldset>
         <fieldset>
             <button name="submit" type="submit" id="submit">Submit</button>
