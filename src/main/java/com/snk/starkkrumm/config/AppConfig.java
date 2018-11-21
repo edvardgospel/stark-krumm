@@ -19,7 +19,7 @@ public class AppConfig {
         return DataSourceBuilder
                 .create()
                 .driverClassName("org.sqlite.JDBC")
-                .url("jdbc:sqlite:snk.db")
+                .url("jdbc:sqlite:stark-krumm.db")
                 .build();
     }
 }

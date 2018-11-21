@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SnkController {
 
 
-    SnkService excelCreatorService;
+    SnkService excelCreatorService = new SnkService();
 
     @RequestMapping(value = "/")
     public String home() {
@@ -22,7 +22,9 @@ public class SnkController {
     @ResponseBody
     @RequestMapping(value = "/send")
     public void send(RoadRequest road) {
-        log.info("send called", road);
+        log.info("send called {}", road);
+        log.info("snkService {}", excelCreatorService);
+        excelCreatorService.insert(road);
         //excelCreatorService.instertData(road);
     }
 }
