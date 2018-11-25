@@ -76,6 +76,11 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.25.2</version>
         </dependency>
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>-->
     </dependencies>
 
     <build>
@@ -85,6 +90,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <finalName>${artifactId}</finalName>
     </build>
 
 

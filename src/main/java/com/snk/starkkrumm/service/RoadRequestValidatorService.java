@@ -11,11 +11,11 @@ public class RoadRequestValidatorService {
         if (isNull(request) ||
                 isNull(request.getRoadNumber()) ||
                 isNull(request.getCarNumber()) ||
-                isEmpty(request.getDriverName())
-            //TODO
-
-
-                ) {
+                isEmpty(request.getDriverName()) ||
+                isEmpty(request.getDeparture().toString()) ||
+                isEmpty(request.getArrival().toString()) ||
+                isNull(request.getDistance()) ||
+                isNull(request.getConsumption())) {
             throw new InvalidRoadRequestException("Request can't be null");
         }
     }

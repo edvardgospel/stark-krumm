@@ -13,8 +13,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -51,8 +54,8 @@ public class SnkService {
             pstmt.setInt(1, road.getRoadNumber());
             pstmt.setInt(2, road.getCarNumber());
             pstmt.setString(3, road.getDriverName());
-            pstmt.setTimestamp(4, Timestamp.valueOf(road.getDeparture()));
-            pstmt.setTimestamp(5, Timestamp.valueOf(road.getArrival()));
+            pstmt.setString(4, road.getDeparture().toString());
+            pstmt.setString(5, road.getArrival().toString());
             pstmt.setInt(6, road.getDistance());
             pstmt.setDouble(7, road.getConsumption());
             pstmt.executeUpdate();
@@ -60,5 +63,49 @@ public class SnkService {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<RoadRequest> findRequestByDeparture(LocalDateTime departure) {
+        List<RoadRequest> roadRequests = new ArrayList<>();
+        String sql = "SELECT * FROM road WHERE departure LIKE(?)";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, departure.format(DateTimeFormatter.ofPattern("yyyy-MM")) + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                roadRequests.add(RoadRequest
+                        .builder()
+                        .roadNumber(rs.getInt("roadNumber"))
+                        .carNumber(rs.getInt("carNumber"))
+                        .driverName(rs.getString("driverName"))
+                        .departure(LocalDateTime.parse(rs.getString("departure")))
+                        .arrival(LocalDateTime.parse(rs.getString("arrival")))
+                        .distance(rs.getInt("distance"))
+                        .consumption(rs.getDouble("consumption"))
+                        .build());
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        log.info("roadRequests returned: ", roadRequests);
+        return roadRequests;
+    }
+
+    public Map<Integer, List<RoadRequest>> mapRoad(List<RoadRequest> roadRequests) {
+        Map<Integer, List<RoadRequest>> roadRequestMap = new HashMap<>();
+        for (RoadRequest roadRequest : roadRequests) {
+            if (!roadRequestMap.containsKey(roadRequest.getCarNumber())) {
+                roadRequestMap.put(roadRequest.getCarNumber(), new ArrayList<>(Arrays.asList(roadRequest)));
+            } else {
+                List<RoadRequest> rr = roadRequestMap.get(roadRequest.getCarNumber());
+                rr.add(roadRequest);
+                roadRequestMap.put(roadRequest.getCarNumber(), rr);
+            }
+        }
+        log.info("MAP: " + roadRequestMap);
+        return roadRequestMap;
     }
 }
