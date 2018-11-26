@@ -10,7 +10,7 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME
 
 @Data
 @Builder
-public class RoadRequest {
+public class Road {
     private int roadNumber;
     private int carNumber;
     private String driverName;

@@ -1,7 +1,9 @@
 package com.snk.starkkrumm.controller;
 
-import com.snk.starkkrumm.model.RoadRequest;
-import com.snk.starkkrumm.service.SnkService;
+import com.snk.starkkrumm.model.Road;
+import com.snk.starkkrumm.service.RoadService;
+import com.snk.starkkrumm.service.RoadValidatorService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,30 +11,27 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-
 @Slf4j
 @Controller
-public class SnkController {
+@RequiredArgsConstructor
+public class RoadController {
 
-
-    SnkService excelCreatorService = new SnkService();
+    private final RoadValidatorService validatorService;
+    private final RoadService roadService;
 
     @RequestMapping(value = "/")
     public String home() {
-        return "snk";
+        return "form";
     }
 
     @ResponseBody
     @RequestMapping(value = "/send")
-    public ResponseEntity send(RoadRequest road, BindingResult bindingResult) {
+    public ResponseEntity send(Road road, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(null);
         }
-        //excelCreatorService.insert(road);
-        List<RoadRequest> roadRequests = excelCreatorService.findRequestByDeparture(road.getDeparture());
-        log.info("ROADREQUESTS: " + roadRequests);
-        excelCreatorService.mapRoad(roadRequests);
+        validatorService.validate(road);
+        roadService.save(road);
         return ResponseEntity.ok().body(null);
     }
 }
