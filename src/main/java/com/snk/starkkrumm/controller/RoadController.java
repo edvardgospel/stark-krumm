@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -30,8 +32,9 @@ public class RoadController {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(null);
         }
-        validatorService.validate(road);
-        roadService.save(road);
+        //validatorService.validate(road);
+        //roadService.save(road);
+        roadService.populateExcelFiles(road.getDeparture());
         return ResponseEntity.ok().body(null);
     }
 }
