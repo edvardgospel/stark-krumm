@@ -1,6 +1,7 @@
 package com.snk.starkkrumm.config;
 
 import com.snk.starkkrumm.repository.RoadRepository;
+import com.snk.starkkrumm.service.ExcelCreationService;
 import com.snk.starkkrumm.service.RoadService;
 import com.snk.starkkrumm.service.RoadValidatorService;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,8 +30,8 @@ public class AppConfig {
     }
 
     @Bean
-    public RoadService roadService(RoadRepository roadRepository) {
-        return new RoadService(roadRepository);
+    public RoadService roadService(ExcelCreationService excelService, RoadRepository roadRepository) {
+        return new RoadService(excelService, roadRepository);
     }
 
     @Bean
