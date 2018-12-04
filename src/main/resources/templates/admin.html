@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>SNK</title>
+    <meta name="description" content="Stark and Krumm">
+    <meta name="author" content="Edvard Eros">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+</head>
+<body>
+<div class="container">
+    <form id="contact" action="/print" method="post">
+        <h3>Stark and Krumm</h3>
+        <fieldset>
+            <select name="month">
+                <option th:value="1">2019-IAN</option>
+                <option th:value="2">2019-FEB</option>
+                <option th:value="3">2019-MAR</option>
+                <option th:value="4">2019-APR</option>
+                <option th:value="5">2019-MAI</option>
+                <option th:value="6">2019-IUN</option>
+                <option th:value="7">2019-IUL</option>
+                <option th:value="8">2019-AUG</option>
+                <option th:value="9">2019-SEP</option>
+                <option th:value="10">2019-OCT</option>
+                <option th:value="11">2019-NOI</option>
+                <option th:value="12">2019-DEC</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <textarea id="commentField"></textarea>
+        </fieldset>
+        <fieldset>
+            <button name="submit" type="submit" id="submit">Printare</button>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>
