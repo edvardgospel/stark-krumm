@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>SNK</title>
@@ -12,12 +12,15 @@
 </head>
 <body>
 <div class="container">
-    <form id="contact" action="/send" method="post">
+    <form th:action="@{/login}" method="post">
         <h3>Stark and Krumm</h3>
         <fieldset>
-            <input placeholder="Numar foaie" type="number" name="roadNumber" required autofocus>
+            <input type="text" name="username" id="username" placeholder="Utilizator" required="true" autofocus="true"/>
+            <input type="password" name="password" id="password" placeholder="Parola" required="true"/>
+            <input type="submit" class="btn btn-lg" value="Autentificare"/>
+            <span th:if="${param.error}">Incorect utilizator sau parola.</span>
+            <span th:if="${param.logout}">Ai fost deconectat.</span>
         </fieldset>
-
     </form>
 </div>
 </body>

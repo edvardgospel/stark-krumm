@@ -11,10 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.constraints.Null;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -22,11 +18,6 @@ public class RoadController {
 
     private final RoadValidatorService validatorService;
     private final RoadService roadService;
-
-    @RequestMapping(value = "/")
-    public String home() {
-        return "user";
-    }
 
     @ResponseBody
     @RequestMapping(value = "/send")
