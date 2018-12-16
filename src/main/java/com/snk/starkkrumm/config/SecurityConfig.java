@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
@@ -43,8 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.inMemoryAuthentication()
-                .withUser("starkkrumm_user").password("password").roles("USER")
+                .withUser("starkkrumm_user").password("{noop}password").roles("USER")
                 .and()
-                .withUser("starkkrumm_admin").password("password").roles("ADMIN");
+                .withUser("starkkrumm_admin").password("{noop}password").roles("ADMIN");
     }
 }
