@@ -25,7 +25,7 @@ public class RoadController {
 
     @RequestMapping(value = "/")
     public String home() {
-        return "form";
+        return "user";
     }
 
     @ResponseBody
