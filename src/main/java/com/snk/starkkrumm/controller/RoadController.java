@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -40,6 +43,12 @@ public class RoadController {
         //roadService.populateExcelFiles(month);
         //printerService.printExcelFiles(month)
         return ResponseEntity.ok().body(null);
+    }
+
+    @RequestMapping
+    public List<String> getRoads(String month) {
+        validatorService.validate(month);
+        return roadService.getRoadsByMonth(month);
     }
 
 }

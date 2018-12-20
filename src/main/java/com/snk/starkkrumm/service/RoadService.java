@@ -31,6 +31,11 @@ public class RoadService {
         excelCreationService.createExcelFiles(categorizeRoadsByCarNumber(roads));
     }
 
+    public List<String> getRoadsByMonth(String month) {
+        //List<Road> roads = ro
+        return null;
+    }
+
     private Map<Integer, List<Road>> categorizeRoadsByCarNumber(List<Road> roads) {
         Map<Integer, List<Road>> categorizedRoads = new HashMap<>();
         for (Road road : roads) {
