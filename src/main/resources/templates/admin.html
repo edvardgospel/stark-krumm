@@ -12,8 +12,52 @@
 </head>
 <body>
 <div class="container">
-    <form id="contact" action="/print" method="post">
+    <form class="contact" action="/send" method="post">
         <h3>Stark and Krumm</h3>
+        <fieldset>
+            <input placeholder="Număr foaie" type="number" name="roadNumber" required autofocus>
+        </fieldset>
+        <fieldset>
+            <select name="carNumber">
+                <option th:value="8">SM-08-SNK</option>
+                <option th:value="9">SM-09-SNK</option>
+                <option th:value="11">SM-11-SNK</option>
+                <option th:value="12">SM-12-SNK</option>
+                <option th:value="14">SM-14-SNK</option>
+                <option th:value="15">SM-15-SNK</option>
+                <option th:value="16">SM-16-SNK</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <select name="driverName">
+                <option value="Jozsi">Jozsi</option>
+                <option value="Karcsi">Karcsi</option>
+                <option value="Ervin">Ervin</option>
+                <option value="Ema">Ema</option>
+                <option value="Szebi">Szebi</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <span>Plecare</span>
+            <input type="datetime-local" name="departure" required>
+        </fieldset>
+        <fieldset>
+            <span>Sosire</span>
+            <input type="datetime-local" name="arrival" required>
+        </fieldset>
+        <fieldset>
+            <input placeholder="Distanţă" type="number" name="distance" min="0" max="3000" required>
+        </fieldset>
+        <fieldset>
+            <input placeholder="Consum" type="number" name="consumption" min="0" max="200" step="0.01" required>
+        </fieldset>
+        <fieldset>
+            <button name="submit" type="submit" class="submit">Submitere</button>
+        </fieldset>
+    </form>
+    <form class="contact" action="/print" method="post">
+        <br><br>
+        <h3>Google Drive</h3>
         <fieldset>
             <select name="month">
                 <option th:value="1">2019-IAN</option>
@@ -31,11 +75,14 @@
             </select>
         </fieldset>
         <fieldset>
-            <textarea id="commentField"></textarea>
+            <textarea id="commentField" style="resize: none" readonly></textarea>
         </fieldset>
         <fieldset>
-            <button name="submit" type="submit" id="submit">Printare</button>
+            <button name="submit" type="submit" class="submit">Încărcare</button>
         </fieldset>
+    </form>
+    <form th:action="@{/logout}" method="post">
+        <input class="button button-outline float-right" type="submit" value="Deconectare"/>
     </form>
 </div>
 </body>

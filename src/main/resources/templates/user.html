@@ -52,8 +52,11 @@
             <input placeholder="Consum" type="number" name="consumption" min="0" max="200" step="0.01" required>
         </fieldset>
         <fieldset>
-            <button name="submit" type="submit" id="submit">Submit</button>
+            <button name="submit" type="submit" id="submit">Submitere</button>
         </fieldset>
+    </form>
+    <form th:action="@{/logout}" method="post">
+        <input class="button button-outline float-right" type="submit" value="Deconectare"/>
     </form>
 </div>
 </body>
