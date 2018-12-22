@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +33,35 @@ public class RoadService {
     }
 
     public List<String> getRoadsByMonth(String month) {
-        //List<Road> roads = ro
-        return null;
+        LocalDateTime departure = convertMonthToLocalDateTime(month);
+        List<Road> roads = roadRepository.findByDeparture(departure);
+        Map<Integer, List<Road>> map = categorizeRoadsByCarNumber(roads);
+        return convertMapToStringList(map);
+    }
+
+    private LocalDateTime convertMonthToLocalDateTime(String month) {
+        StringBuilder sb = new StringBuilder(month);
+        if (sb.length() == 1) {
+            sb = new StringBuilder("0" + month);
+        }
+        String str = "2019-" + sb + "-01 12:30";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+        return dateTime;
+    }
+
+    private List<String> convertMapToStringList(Map<Integer, List<Road>> map) {
+        List<String> strings = new ArrayList<>();
+        for (Map.Entry<Integer, List<Road>> entry : map.entrySet()) {
+            StringBuilder sb = new StringBuilder("SM-" +
+                    excelCreationService.getLicensePlateNumber(entry.getKey()) + "-SNK: ");
+            for (Road road : entry.getValue()) {
+                sb.append(road.getRoadNumber() + " ");
+            }
+            sb.append("\n");
+            strings.add(sb.toString());
+        }
+        return strings;
     }
 
     private Map<Integer, List<Road>> categorizeRoadsByCarNumber(List<Road> roads) {

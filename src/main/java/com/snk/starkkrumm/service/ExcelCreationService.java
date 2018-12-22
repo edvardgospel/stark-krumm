@@ -103,7 +103,7 @@ public class ExcelCreationService {
                 .map(month -> month.text).findFirst().get();
     }
 
-    private Object getLicensePlateNumber(int carNumber) {
+    public Object getLicensePlateNumber(int carNumber) {
         return carNumber < 10 ? ZERO + carNumber : carNumber;
     }
 

@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="container">
-    <form class="contact" action="/send" method="post">
+    <form class="contact" action="/starkkrumm/send" method="post">
         <h3>Stark and Krumm</h3>
         <fieldset>
             <input placeholder="Număr foaie" type="number" name="roadNumber" required autofocus>
@@ -55,11 +55,11 @@
             <button name="submit" type="submit" class="submit">Submitere</button>
         </fieldset>
     </form>
-    <form class="contact" action="/print" method="post">
+    <form class="contact" action="/starkkrumm/print" method="post">
         <br><br>
         <h3>Google Drive</h3>
         <fieldset>
-            <select name="month">
+            <select name="month" onchange="monthChanged(this.value)">
                 <option th:value="1">2019-IAN</option>
                 <option th:value="2">2019-FEB</option>
                 <option th:value="3">2019-MAR</option>
@@ -75,7 +75,7 @@
             </select>
         </fieldset>
         <fieldset>
-            <textarea id="commentField" style="resize: none" readonly></textarea>
+            <textarea id="commentField" rows="7" style="resize: none" readonly></textarea>
         </fieldset>
         <fieldset>
             <button name="submit" type="submit" class="submit">Încărcare</button>
@@ -85,5 +85,7 @@
         <input class="button button-outline float-right" type="submit" value="Deconectare"/>
     </form>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="snk.js"></script>
 </body>
 </html>
