@@ -3,6 +3,7 @@ package com.snk.starkkrumm.service;
 import com.snk.starkkrumm.exception.InvalidMonthException;
 import com.snk.starkkrumm.exception.InvalidRoadException;
 import com.snk.starkkrumm.model.Road;
+import com.snk.starkkrumm.model.RoadRequest;
 import org.springframework.stereotype.Service;
 
 import static java.util.Objects.isNull;
@@ -28,6 +29,22 @@ public class RoadValidatorService {
     public void validate(String month) {
         if (isEmpty(month)) {
             throw new InvalidMonthException(REQUEST_NULL_MESSAGE);
+        }
+    }
+
+    public void validate(RoadRequest roadRequest) {
+        if (isNull(roadRequest) ||
+                isNull(roadRequest.getRoadNumber()) ||
+                isNull(roadRequest.getCarNumber()) ||
+                isEmpty(roadRequest.getDriverName()) ||
+                isEmpty(roadRequest.getDeparture()) ||
+                isEmpty(roadRequest.getArrival()) ||
+                isNull(roadRequest.getDistanceBig()) ||
+                isNull(roadRequest.getDistanceSmall()) ||
+                isNull(roadRequest.getConsumption1()) ||
+                isNull(roadRequest.getConsumption2()) ||
+                isNull(roadRequest.getConsumption3())) {
+            throw new InvalidRoadException(REQUEST_NULL_MESSAGE);
         }
     }
 }

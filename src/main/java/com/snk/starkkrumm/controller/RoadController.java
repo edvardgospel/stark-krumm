@@ -1,6 +1,7 @@
 package com.snk.starkkrumm.controller;
 
 import com.snk.starkkrumm.model.Road;
+import com.snk.starkkrumm.model.RoadRequest;
 import com.snk.starkkrumm.service.RoadService;
 import com.snk.starkkrumm.service.RoadValidatorService;
 import lombok.RequiredArgsConstructor;
@@ -8,13 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+
+import static com.snk.starkkrumm.service.transformer.RoadTransformer.transform;
 
 @Slf4j
 @Controller
@@ -32,6 +32,13 @@ public class RoadController {
         }
         validatorService.validate(road);
         roadService.save(road);
+    }
+
+    @ResponseBody
+    @PostMapping("/starkkrumm/sendV2")
+    public void saveRoadV2(@RequestBody RoadRequest roadRequest) {
+        validatorService.validate(roadRequest);
+        roadService.save(transform(roadRequest));
     }
 
     @ResponseBody

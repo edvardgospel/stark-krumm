@@ -12,12 +12,10 @@
 </head>
 <body>
 <div class="container">
-    <form class="contact" action="/starkkrumm/send" method="post">
+    <form id="contact" action="/starkkrumm/send" method="post">
         <h3>Stark and Krumm</h3>
         <fieldset>
             <input placeholder="Număr foaie" type="number" name="roadNumber" required autofocus>
-        </fieldset>
-        <fieldset>
             <select name="carNumber">
                 <option th:value="8">SM-08-SNK</option>
                 <option th:value="9">SM-09-SNK</option>
@@ -26,30 +24,43 @@
                 <option th:value="14">SM-14-SNK</option>
                 <option th:value="15">SM-15-SNK</option>
                 <option th:value="16">SM-16-SNK</option>
+                <option th:value="17">SM-17-SNK</option>
+                <option th:value="18">SM-18-SNK</option>
             </select>
-        </fieldset>
-        <fieldset>
             <select name="driverName">
-                <option value="Jozsi">Jozsi</option>
-                <option value="Karcsi">Karcsi</option>
-                <option value="Ervin">Ervin</option>
-                <option value="Ema">Ema</option>
-                <option value="Szebi">Szebi</option>
+                <option value="BalogI">Józsi</option>
+                <option value="KatoS">Sanyi</option>
+                <option value="BorosZs">Zsombi</option>
+                <option value="JuhaszP">Péter</option>
+                <option value="DurkovicsA">Öcsike</option>
+                <option value="TatarE ArdeleanS">Ervin Szebi</option>
+                <option value="MegyesanE NagyK">Ema Karcsi</option>
             </select>
         </fieldset>
         <fieldset>
-            <span>Plecare</span>
-            <input type="datetime-local" name="departure" required>
+            <input placeholder="DistanţăMare" type="number" name="distance1" min="0" required>
+            <input placeholder="DistanţăMic" type="number" name="distance2" min="0" required>
         </fieldset>
         <fieldset>
-            <span>Sosire</span>
-            <input type="datetime-local" name="arrival" required>
+            <input placeholder="Consum1" type="number" name="consumption1" min="0" max="200" step="0.01" required>
+            <input placeholder="Consum2" type="number" name="consumption2" min="0" max="200" step="0.01" required>
+            <input placeholder="Consum3" type="number" name="consumption3" min="0" max="200" step="0.01" required>
         </fieldset>
         <fieldset>
-            <input placeholder="Distanţă" type="number" name="distance" min="0" max="3000" required>
-        </fieldset>
-        <fieldset>
-            <input placeholder="Consum" type="number" name="consumption" min="0" max="200" step="0.01" required>
+            <select name="date">
+                <option th:value="2019-IAN">2019-IAN</option>
+                <option th:value="2019-FEB">2019-FEB</option>
+                <option th:value="2019-MAR">2019-MAR</option>
+                <option th:value="2019-APR">2019-APR</option>
+                <option th:value="2019-MAI">2019-MAI</option>
+                <option th:value="2019-IUN">2019-IUN</option>
+                <option th:value="2019-IUL">2019-IUL</option>
+                <option th:value="2019-AUG">2019-AUG</option>
+                <option th:value="2019-SEP">2019-SEP</option>
+                <option th:value="2019-OCT">2019-OCT</option>
+                <option th:value="2019-NOI">2019-NOI</option>
+                <option th:value="2019-DEC">2019-DEC</option>
+            </select>
         </fieldset>
         <fieldset>
             <button name="submit" type="submit" class="submit">Submitere</button>
@@ -60,25 +71,51 @@
         <h3>Google Drive</h3>
         <fieldset>
             <select name="month" onchange="monthChanged(this.value)">
-                <option th:value="1">2019-IAN</option>
-                <option th:value="2">2019-FEB</option>
-                <option th:value="3">2019-MAR</option>
-                <option th:value="4">2019-APR</option>
-                <option th:value="5">2019-MAI</option>
-                <option th:value="6">2019-IUN</option>
-                <option th:value="7">2019-IUL</option>
-                <option th:value="8">2019-AUG</option>
-                <option th:value="9">2019-SEP</option>
-                <option th:value="10">2019-OCT</option>
-                <option th:value="11">2019-NOI</option>
-                <option th:value="12">2019-DEC</option>
+                <option th:value="2019-IAN">2019-IAN</option>
+                <option th:value="2019-FEB">2019-FEB</option>
+                <option th:value="2019-MAR">2019-MAR</option>
+                <option th:value="2019-APR">2019-APR</option>
+                <option th:value="2019-MAI">2019-MAI</option>
+                <option th:value="2019-IUN">2019-IUN</option>
+                <option th:value="2019-IUL">2019-IUL</option>
+                <option th:value="2019-AUG">2019-AUG</option>
+                <option th:value="2019-SEP">2019-SEP</option>
+                <option th:value="2019-OCT">2019-OCT</option>
+                <option th:value="2019-NOI">2019-NOI</option>
+                <option th:value="2019-DEC">2019-DEC</option>
             </select>
         </fieldset>
         <fieldset>
-            <textarea id="commentField" rows="7" style="resize: none" readonly></textarea>
+            <textarea id="commentField" style="resize: none; height: 11em" readonly></textarea>
         </fieldset>
         <fieldset>
             <button name="submit" type="submit" class="submit">Încărcare</button>
+        </fieldset>
+        <fieldset>
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Height</th>
+                    <th>Location</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Stephen Curry</td>
+                    <td>27</td>
+                    <td>1,91</td>
+                    <td>Akron, OH</td>
+                </tr>
+                <tr>
+                    <td>Klay Thompson</td>
+                    <td>25</td>
+                    <td>2,01</td>
+                    <td>Los Angeles, CA</td>
+                </tr>
+                </tbody>
+            </table>
         </fieldset>
     </form>
     <form th:action="@{/logout}" method="post">

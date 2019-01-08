@@ -1,6 +1,7 @@
 package com.snk.starkkrumm.service;
 
 import com.snk.starkkrumm.model.Road;
+import com.snk.starkkrumm.model.RoadV2;
 import com.snk.starkkrumm.repository.RoadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -77,5 +78,9 @@ public class RoadService {
             }
         }
         return categorizedRoads;
+    }
+
+    public void save(RoadV2 roadV2) {
+        roadRepository.save(roadV2);
     }
 }

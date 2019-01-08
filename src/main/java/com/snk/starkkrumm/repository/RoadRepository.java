@@ -1,6 +1,7 @@
 package com.snk.starkkrumm.repository;
 
 import com.snk.starkkrumm.model.Road;
+import com.snk.starkkrumm.model.RoadV2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -72,5 +73,24 @@ public class RoadRepository {
             System.out.println(e.getMessage());
         }
         return roads;
+    }
+
+    public void save(RoadV2 roadV2) {
+        String sql = "INSERT INTO road_v2(roadNumber,carNumber,driverName,departure,arrival,month,year,distance,consumption) VALUES(?,?,?,?,?,?,?,?,?)";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, roadV2.getRoadNumber());
+            preparedStatement.setInt(2, roadV2.getCarNumber());
+            preparedStatement.setString(3, roadV2.getDriverName());
+            preparedStatement.setString(4, roadV2.getDeparture());
+            preparedStatement.setString(5, roadV2.getArrival());
+            preparedStatement.setString(6, roadV2.getMonth());
+            preparedStatement.setString(7, roadV2.getYear());
+            preparedStatement.setInt(8, roadV2.getDistance());
+            preparedStatement.setDouble(9, roadV2.getConsumption());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
