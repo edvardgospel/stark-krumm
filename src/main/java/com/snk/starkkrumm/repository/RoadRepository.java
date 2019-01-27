@@ -22,14 +22,16 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 @RequiredArgsConstructor
 public class RoadRepository {
 
-    public static final String ROAD_NUMBER = "roadNumber";
-    public static final String CAR_NUMBER = "carNumber";
-    public static final String DRIVER_NAME = "driverName";
-    public static final String DEPARTURE = "departure";
-    public static final String ARRIVAL = "arrival";
-    public static final String DISTANCE = "distance";
-    public static final String CONSUMPTION = "consumption";
-    public static final String YYYY_MM = "yyyy-MM";
+    private static final String ROAD_NUMBER = "roadNumber";
+    private static final String CAR_NUMBER = "carNumber";
+    private static final String DRIVER_NAME = "driverName";
+    private static final String DEPARTURE = "departure";
+    private static final String ARRIVAL = "arrival";
+    private static final String MONTH = "month";
+    private static final String YEAR = "year";
+    private static final String DISTANCE = "distance";
+    private static final String CONSUMPTION = "consumption";
+    private static final String YYYY_MM = "yyyy-MM";
     private final DataSource dataSource;
 
     public void save(Road road) {
@@ -76,6 +78,7 @@ public class RoadRepository {
     }
 
     public void save(RoadV2 roadV2) {
+        log.info("save repo()");
         String sql = "INSERT INTO road_v2(roadNumber,carNumber,driverName,departure,arrival,month,year,distance,consumption) VALUES(?,?,?,?,?,?,?,?,?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -92,5 +95,34 @@ public class RoadRepository {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<RoadV2> findByMonthAndCarNumber(String month, Integer carNumber) {
+        List<RoadV2> roads = new ArrayList<>();
+        String sql = "SELECT * FROM road_v2 WHERE month = ? AND carNumber = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, month);
+            preparedStatement.setInt(2, carNumber);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                roads.add(RoadV2.
+                        builder()
+                        .roadNumber(resultSet.getInt(ROAD_NUMBER))
+                        .carNumber(resultSet.getInt(CAR_NUMBER))
+                        .driverName(resultSet.getString(DRIVER_NAME))
+                        .departure(resultSet.getString(DEPARTURE))
+                        .arrival(resultSet.getString(ARRIVAL))
+                        .month(resultSet.getString(MONTH))
+                        .year(resultSet.getString(YEAR))
+                        .distance(resultSet.getInt(DISTANCE))
+                        .consumption(resultSet.getDouble(CONSUMPTION))
+                        .build());
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return roads;
     }
 }

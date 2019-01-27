@@ -1,5 +1,6 @@
 package com.snk.starkkrumm.service;
 
+import com.snk.starkkrumm.exception.ExcelCreationException;
 import com.snk.starkkrumm.model.Road;
 import com.snk.starkkrumm.model.RoadV2;
 import com.snk.starkkrumm.repository.RoadRepository;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,15 +25,16 @@ public class RoadService {
 
     private final ExcelCreationService excelCreationService;
     private final RoadRepository roadRepository;
+    private static final String EXCEL_ERROR = "Could not create excel files";
 
     public void save(Road road) {
         roadRepository.save(road);
     }
 
-    public void populateExcelFiles(LocalDateTime departure) {
+    /*public void populateExcelFiles(LocalDateTime departure) {
         List<Road> roads = roadRepository.findByDeparture(departure);
         excelCreationService.createExcelFiles(categorizeRoadsByCarNumber(roads));
-    }
+    }*/
 
     public List<String> getRoadsByMonth(String month) {
         LocalDateTime departure = convertMonthToLocalDateTime(month);
@@ -81,6 +84,24 @@ public class RoadService {
     }
 
     public void save(RoadV2 roadV2) {
+        log.info("save()");
         roadRepository.save(roadV2);
+    }
+
+    public List<RoadV2> getRoadsByDateAndCarNumber(String date, Integer carNumber) {
+        return roadRepository.findByMonthAndCarNumber(getMonthFromDate(date), carNumber);
+    }
+
+    public void uploadRoad(String date, Integer carNumber) {
+        List<RoadV2> roads = roadRepository.findByMonthAndCarNumber(getMonthFromDate(date), carNumber);
+        try {
+            excelCreationService.createExcelFileV2(roads);
+        } catch (IOException e) {
+            throw new ExcelCreationException(EXCEL_ERROR);
+        }
+    }
+
+    private String getMonthFromDate(String month) {
+        return month.split("-")[1];
     }
 }
