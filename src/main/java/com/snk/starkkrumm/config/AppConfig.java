@@ -33,6 +33,12 @@ public class AppConfig {
     }
 
     @Bean
+    public ExcelCreationService excelCreationService(@Value("${input.xls}") String inputXls,
+                                                     @Value("${output.path}") String outputPath) {
+        return new ExcelCreationService(inputXls, outputPath);
+    }
+
+    @Bean
     public RoadService roadService(ExcelCreationService excelService, RoadRepository roadRepository) {
         return new RoadService(excelService, roadRepository);
     }
