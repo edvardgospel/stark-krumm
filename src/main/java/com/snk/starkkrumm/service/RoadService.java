@@ -1,6 +1,5 @@
 package com.snk.starkkrumm.service;
 
-import com.snk.starkkrumm.exception.ExcelCreationException;
 import com.snk.starkkrumm.model.Road;
 import com.snk.starkkrumm.repository.RoadRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +17,7 @@ import static com.snk.starkkrumm.util.RoadUtil.getMonthFromDate;
 public class RoadService {
     private final ExcelCreationService excelCreationService;
     private final RoadRepository roadRepository;
+    private final GoogleDriveRequestSenderService googleDriveService;
     private static final String EXCEL_ERROR = "Could not create excel files";
 
     public void save(Road road) {
@@ -29,12 +29,18 @@ public class RoadService {
     }
 
     public void uploadRoad(String date, Integer carNumber) {
-        List<Road> roads = roadRepository.findByMonthAndCarNumber(getMonthFromDate(date), carNumber);
+        /*List<Road> roads = roadRepository.findByMonthAndCarNumber(getMonthFromDate(date), carNumber);
         try {
             excelCreationService.createExcelFile(roads);
         } catch (IOException e) {
             throw new ExcelCreationException(EXCEL_ERROR);
+        }*/
+        try {
+            googleDriveService.uploadExcel();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 
 }
