@@ -4,26 +4,28 @@ import com.google.api.client.http.FileContent;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GoogleDriveRequestSenderService {
+
     private final Drive drive;
 
-    public void uploadExcel() throws IOException {
-        File fileMetadata = new File();
-        fileMetadata.setName("My Report");
-        fileMetadata.setMimeType("application/vnd.google-apps.spreadsheet");
-
-        java.io.File filePath = new java.io.File(System.getProperty("user.home") + "\\Desktop\\work\\2019-IAN-SNK-08.xls");
-        FileContent mediaContent = new FileContent("text/xls", filePath);
-        File file = drive.files()
+    void uploadExcel(String fileName) throws IOException {
+        File fileMetadata = new File().setName(fileName);//e.g.:"IAN-08-SNK.xls"
+        java.io.File filePath = new java.io.File(System.getProperty("user.home")
+                + "\\Desktop\\work\\"
+                + fileName);
+        FileContent mediaContent = new FileContent("application/vnd.ms-excel", filePath);
+        drive.files()
                 .create(fileMetadata, mediaContent)
                 .setFields("id")
                 .execute();
-        System.out.println("File ID: " + file.getId());
+        log.info("File uploaded to Google Drive successfully: " + fileName);
     }
 }

@@ -29,7 +29,7 @@ public class ExcelCreationService {
         final int carNumber = roads.get(0).getCarNumber();
         final String month = roads.get(0).getMonth();
         final String year = roads.get(0).getYear();
-        final FileOutputStream out = new FileOutputStream(createFile(carNumber, year, month));
+        final FileOutputStream out = new FileOutputStream(createFile(carNumber, month));
         int rowNumber = 11;
         int allDistance = 0;
         double allConsumption = 0.0;
@@ -66,9 +66,10 @@ public class ExcelCreationService {
         sheet.getRow(30).getCell(20).setCellValue(allConsumption / shortDistance);
     }
 
-    private File createFile(int carNumber, String year, String month) {
-        return new File(getProperty(USER_HOME) + OUTPUT_PATH + year + "-" + month
-                + "-SNK-" + getLicensePlateNumber(carNumber) + ".xls");
+    private File createFile(int carNumber, String month) {
+        return new File(getProperty(USER_HOME) + OUTPUT_PATH + month
+                + "-"
+                + getLicensePlateNumber(carNumber) + "-SNK.xls");
     }
 
     private Object getLicensePlateNumber(int carNumber) {
