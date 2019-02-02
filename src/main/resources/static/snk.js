@@ -1,3 +1,7 @@
+window.onload = function() {
+    dateCarNumberChanged($("#dateChange").val(), $("#carNumberChange").val());
+}
+
 function saveRoad() {
     $.post("/starkkrumm/sendV2",
     {"roadNumber": $("#roadNumber").val(),
