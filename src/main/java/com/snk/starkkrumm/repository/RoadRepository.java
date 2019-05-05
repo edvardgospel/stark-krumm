@@ -32,7 +32,7 @@ public class RoadRepository {
 
     public void save(Road road) {
         log.info("save repo()");
-        String sql = "INSERT INTO road_v2(roadNumber,carNumber,driverName,departure,arrival,month,year,distance,consumption) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO road(roadNumber,carNumber,driverName,departure,arrival,month,year,distance,consumption) VALUES(?,?,?,?,?,?,?,?,?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, road.getRoadNumber());
@@ -52,7 +52,7 @@ public class RoadRepository {
 
     public List<Road> findByMonthAndCarNumber(String month, Integer carNumber) {
         List<Road> roads = new ArrayList<>();
-        String sql = "SELECT * FROM road_v2 WHERE month = ? AND carNumber = ?";
+        String sql = "SELECT * FROM road WHERE month = ? AND carNumber = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, month);

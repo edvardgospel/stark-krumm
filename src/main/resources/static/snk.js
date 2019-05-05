@@ -3,7 +3,7 @@ window.onload = function() {
 }
 
 function saveRoad() {
-    $.post("/starkkrumm/sendV2",
+    $.post("/starkkrumm/send",
     {"roadNumber": $("#roadNumber").val(),
     "carNumber": $("#carNumber").val(),
     "driverName": $("#driverName").val(),
@@ -15,6 +15,7 @@ function saveRoad() {
     "consumption1": $("#consumption1").val(),
     "consumption2": $("#consumption2").val(),
     "consumption3": $("#consumption3").val()})
+    .fail(console.log("Not working"));
 }
 
 function dateCarNumberChanged(date, carNumber) {
@@ -40,5 +41,6 @@ function convertToHtmlTable(roads) {
 }
 
 function uploadToDrive(date, carNumber) {
-    $.get("/starkkrumm/print", { "date": date, "carNumber": carNumber });
+    $.get("/starkkrumm/print", { "date": date, "carNumber": carNumber })
+    .fail(console.log("Not working"));
 }

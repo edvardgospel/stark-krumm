@@ -14,8 +14,8 @@
 <div class="container">
     <h3>Stark and Krumm</h3>
     <fieldset>
-        <input id="roadNumber" name="roadNumber" placeholder="Număr foaie" type="number" required autofocus>
-        <select id="carNumber" name="carNumber">
+        <input id="roadNumber" placeholder="Număr foaie" type="number" autofocus>
+        <select id="carNumber">
             <option value="8">SM-08-SNK</option>
             <option value="9">SM-09-SNK</option>
             <option value="11">SM-11-SNK</option>
@@ -26,7 +26,7 @@
             <option value="17">SM-17-SNK</option>
             <option value="18">SM-18-SNK</option>
         </select>
-        <select id="driverName" name="driverName">
+        <select id="driverName">
             <option value="BalogI">Józsi</option>
             <option value="KatoS">Sanyi</option>
             <option value="BorosZs">Zsombi</option>
@@ -37,23 +37,20 @@
         </select>
     </fieldset>
     <fieldset>
-        <input id="departure" name="departure" placeholder="Plecare" type="text" required>
-        <input id="arrival" name="arrival" placeholder="Sosire" type="text" required>
+        <input id="departure" placeholder="Plecare" type="text">
+        <input id="arrival" placeholder="Sosire" type="text">
     </fieldset>
     <fieldset>
-        <input id="distanceBig" name="distanceBig" placeholder="DistanţăMare" type="number" min="0" required>
-        <input id="distanceSmall" name="distanceSmall" placeholder="DistanţăMic" type="number" min="0" required>
+        <input id="distanceBig" placeholder="DistanţăMare" type="number">
+        <input id="distanceSmall" placeholder="DistanţăMic" type="number">
     </fieldset>
     <fieldset>
-        <input id="consumption1" name="consumption1" placeholder="Consum1" type="number" min="0" max="200" step="0.01"
-               required>
-        <input id="consumption2" name="consumption2" placeholder="Consum2" type="number" min="0" max="200" step="0.01"
-               required>
-        <input id="consumption3" name="consumption3" placeholder="Consum3" type="number" min="0" max="200" step="0.01"
-               required>
+        <input id="consumption1" placeholder="Consum1" type="number">
+        <input id="consumption2" placeholder="Consum2" type="number">
+        <input id="consumption3" placeholder="Consum3" type="number">
     </fieldset>
     <fieldset>
-        <select id="date" name="date">
+        <select id="date">
             <option value="2019-IAN">2019-IAN</option>
             <option value="2019-FEB">2019-FEB</option>
             <option value="2019-MAR">2019-MAR</option>
@@ -69,13 +66,12 @@
         </select>
     </fieldset>
     <fieldset>
-        <input type="button" value="Submitere" name="submit" onclick="saveRoad()"/>
+        <input type="button" value="Submitere" onsubmit="saveRoad()"/>
     </fieldset>
     <br><br>
     <h3>Google Drive</h3>
     <fieldset>
-        <select id="dateChange" name="dateChange"
-                onchange="dateCarNumberChanged(this.value,carNumberChange.value)">
+        <select id="dateChange" onchange="dateCarNumberChanged(this.value,carNumberChange.value)">
             <option value="2019-IAN">2019-IAN</option>
             <option value="2019-FEB">2019-FEB</option>
             <option value="2019-MAR">2019-MAR</option>
@@ -91,8 +87,7 @@
         </select>
     </fieldset>
     <fieldset>
-        <select id="carNumberChange" name="carNumberChange"
-                onchange="dateCarNumberChanged(dateChange.value,this.value)">
+        <select id="carNumberChange" onchange="dateCarNumberChanged(dateChange.value,this.value)">
             <option value="8">SM-08-SNK</option>
             <option value="9">SM-09-SNK</option>
             <option value="11">SM-11-SNK</option>
@@ -105,8 +100,7 @@
         </select>
     </fieldset>
     <fieldset>
-        <input type="button" value="Încărcare" name="submit"
-               onclick="uploadToDrive(dateChange.value,carNumberChange.value)"/>
+        <input type="button" value="Încărcare" onsubmit="uploadToDrive(dateChange.value,carNumberChange.value)"/>
     </fieldset>
     <fieldset>
         <table>

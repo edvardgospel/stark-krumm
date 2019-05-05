@@ -10,13 +10,21 @@ import static org.thymeleaf.util.StringUtils.isEmpty;
 
 @Service
 public class RoadValidatorService {
-    private static final String REQUEST_NULL_MESSAGE = "Request can't be null";
+    public static final String REQUEST_NULL_MESSAGE = "Request can't be null";
 
     public void validate(RoadRequest roadRequest) {
         if (isNull(roadRequest) ||
+                isNull(roadRequest.getRoadNumber()) ||
+                isNull(roadRequest.getCarNumber()) ||
                 isEmpty(roadRequest.getDriverName()) ||
                 isEmpty(roadRequest.getDeparture()) ||
-                isEmpty(roadRequest.getArrival())) {
+                isEmpty(roadRequest.getArrival()) ||
+                isEmpty(roadRequest.getDate()) ||
+                isNull(roadRequest.getDistanceBig()) ||
+                isNull(roadRequest.getDistanceSmall()) ||
+                isNull(roadRequest.getConsumption1()) ||
+                isNull(roadRequest.getConsumption2()) ||
+                isNull(roadRequest.getConsumption3())) {
             throw new InvalidRoadException(REQUEST_NULL_MESSAGE);
         }
     }

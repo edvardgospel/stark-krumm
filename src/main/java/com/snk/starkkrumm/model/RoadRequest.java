@@ -7,15 +7,15 @@ import lombok.Data;
 @Data
 @Builder
 public class RoadRequest {
-    private int roadNumber;
-    private int carNumber;
+    private Integer roadNumber;
+    private Integer carNumber;
     private String driverName;
     private String departure;
     private String arrival;
     private String date;
-    private int distanceBig;
-    private int distanceSmall;
-    private double consumption1;
-    private double consumption2;
-    private double consumption3;
+    private Integer distanceBig;
+    private Integer distanceSmall;
+    private Integer consumption1;
+    private Integer consumption2;
+    private Integer consumption3;
 }
