@@ -1,17 +1,18 @@
 package com.snk.starkkrumm.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import com.google.api.services.drive.Drive;
 import com.snk.starkkrumm.repository.RoadRepository;
 import com.snk.starkkrumm.service.ExcelCreationService;
 import com.snk.starkkrumm.service.GoogleDriveRequestSenderService;
 import com.snk.starkkrumm.service.RoadService;
 import com.snk.starkkrumm.service.RoadValidatorService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import javax.sql.DataSource;
 
 @Configuration
 public class AppConfig {
@@ -28,7 +29,7 @@ public class AppConfig {
         return DataSourceBuilder
                 .create()
                 .driverClassName(driverClassName)
-                .url("jdbc:sqlite:" + System.getProperty("user.home") + dbUrl)
+                .url("jdbc:sqlite:" /*+ System.getProperty("user.home")*/ + dbUrl)
                 .build();
     }
 
