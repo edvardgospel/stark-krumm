@@ -1,17 +1,19 @@
 package com.snk.starkkrumm.repository;
 
-import com.snk.starkkrumm.model.Road;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.springframework.stereotype.Repository;
+
+import com.snk.starkkrumm.model.Road;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Repository
@@ -50,13 +52,14 @@ public class RoadRepository {
         }
     }
 
-    public List<Road> findByMonthAndCarNumber(String month, Integer carNumber) {
+    public List<Road> findByYearMonthAndCarNumber(String year, String month, Integer carNumber) {
         List<Road> roads = new ArrayList<>();
-        String sql = "SELECT * FROM road WHERE month = ? AND carNumber = ?";
+        String sql = "SELECT * FROM road WHERE year = ? AND month = ? AND carNumber = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, month);
-            preparedStatement.setInt(2, carNumber);
+            preparedStatement.setString(1, year);
+            preparedStatement.setString(2, month);
+            preparedStatement.setInt(3, carNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 roads.add(Road.
@@ -77,5 +80,47 @@ public class RoadRepository {
             log.warn(e.getMessage());
         }
         return roads;
+    }
+
+    public Road findOne(String year, String month, Integer carNumber, Integer roadNumber) {
+        String sql = "SELECT * FROM road WHERE year = ? AND month = ? AND carNumber = ? AND roadNumber = ?";
+        Road road = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, year);
+            preparedStatement.setString(2, month);
+            preparedStatement.setInt(3, carNumber);
+            preparedStatement.setInt(4, roadNumber);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            road = Road.builder()
+                    .roadNumber(resultSet.getInt(ROAD_NUMBER))
+                    .carNumber(resultSet.getInt(CAR_NUMBER))
+                    .driverName(resultSet.getString(DRIVER_NAME))
+                    .departure(resultSet.getString(DEPARTURE))
+                    .arrival(resultSet.getString(ARRIVAL))
+                    .month(resultSet.getString(MONTH))
+                    .year(resultSet.getString(YEAR))
+                    .distance(resultSet.getInt(DISTANCE))
+                    .consumption(resultSet.getDouble(CONSUMPTION))
+                    .build();
+
+        } catch (SQLException e) {
+            log.warn(e.getMessage());
+        }
+        return road;
+    }
+
+    public void delete(Road road) {
+        String sql = "DELETE FROM road WHERE year = ? AND month = ? AND carNumber = ? AND roadNumber = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, road.getYear());
+            preparedStatement.setString(2, road.getMonth());
+            preparedStatement.setInt(3, road.getCarNumber());
+            preparedStatement.setInt(4, road.getRoadNumber());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            log.warn(e.getMessage());
+        }
     }
 }

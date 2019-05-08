@@ -2,12 +2,12 @@ package com.snk.starkkrumm.util;
 
 import com.snk.starkkrumm.model.RoadRequest;
 
-public class RoadUtil {
-    public static String getYearFromDate(String date) {
+public final class RoadUtil {
+    public static String getYear(String date) {
         return date.split("-")[0];
     }
 
-    public static String getMonthFromDate(String date) {
+    public static String getMonth(String date) {
         return date.split("-")[1];
     }
 

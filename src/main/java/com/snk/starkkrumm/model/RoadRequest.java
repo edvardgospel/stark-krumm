@@ -15,7 +15,7 @@ public class RoadRequest {
     private String date;
     private Integer distanceBig;
     private Integer distanceSmall;
-    private Integer consumption1;
-    private Integer consumption2;
-    private Integer consumption3;
+    private Double consumption1;
+    private Double consumption2;
+    private Double consumption3;
 }

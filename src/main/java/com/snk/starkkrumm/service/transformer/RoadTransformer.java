@@ -13,8 +13,8 @@ public class RoadTransformer {
                 .driverName(request.getDriverName())
                 .departure(request.getDeparture())
                 .arrival(request.getArrival())
-                .month(getMonthFromDate(request.getDate()))
-                .year(getYearFromDate(request.getDate()))
+                .month(getMonth(request.getDate()))
+                .year(getYear(request.getDate()))
                 .distance(getDistance(request))
                 .consumption(getConsumption(request))
                 .build();

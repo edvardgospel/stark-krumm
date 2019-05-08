@@ -1,17 +1,22 @@
 package com.snk.starkkrumm.service;
 
+import static com.snk.starkkrumm.util.RoadUtil.getMonth;
+import static com.snk.starkkrumm.util.RoadUtil.getYear;
+import static java.lang.String.valueOf;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import com.snk.starkkrumm.exception.ExcelCreationOrUploadException;
+import com.snk.starkkrumm.exception.InvalidRoadException;
 import com.snk.starkkrumm.model.Road;
 import com.snk.starkkrumm.repository.RoadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import java.io.IOException;
-import java.util.List;
-
-import static com.snk.starkkrumm.util.RoadUtil.getMonthFromDate;
 
 @Slf4j
 @Service
@@ -23,32 +28,55 @@ public class RoadService {
     private static final String EXCEL_ERROR = "Could not create or upload excel files";
 
     public void save(Road road) {
-        roadRepository.save(road);
+        Road existingRoad = findOne(road.getYear(), road.getMonth(), road.getCarNumber(), road.getRoadNumber());
+        if (Objects.isNull(existingRoad)) {
+            roadRepository.save(road);
+            log.info("Road saved successfully.");
+        } else {
+            log.warn("Road already exists!");
+            throw new InvalidRoadException("Invalid road.");
+        }
     }
 
-    public List<Road> getRoadsByDateAndCarNumber(String date, Integer carNumber) {
-        return roadRepository.findByMonthAndCarNumber(getMonthFromDate(date), carNumber);
+    public List<Road> deleteRoad(String date, Integer carNumber, Integer roadNumber) {
+        Road existingRoad = findOne(getYear(date), getMonth(date), carNumber, roadNumber);
+        if (Objects.nonNull(existingRoad)) {
+            roadRepository.delete(existingRoad);
+            log.info("Road deleted successfully.");
+        } else {
+            log.warn("Road not exists, can't be deleted!");
+            throw new InvalidRoadException("Invalid road.");
+        }
+        return getRoads(date, carNumber);
     }
 
-    public void uploadRoad(String date, Integer carNumber) {
-        List<Road> roads = roadRepository.findByMonthAndCarNumber(getMonthFromDate(date), carNumber);
+    public List<Road> uploadRoad(String date, Integer carNumber) {
+        List<Road> roads = getRoads(date, carNumber);
         if (CollectionUtils.isEmpty(roads)) {
-            log.warn("Null or empty road list"); //TODO exception handling
-            return;
+            log.warn("Null or empty road list");
+            throw new InvalidRoadException("Invalid road.");
         }
         try {
             excelCreationService.createExcelFile(roads);
-            googleDriveService.uploadExcel(getMonthFromDate(date)
+            googleDriveService.uploadExcel(getMonth(date)
                     + "-"
                     + getLicensePlateNumber(carNumber)
                     + "-SNK.xls");
         } catch (IOException e) {
             throw new ExcelCreationOrUploadException(EXCEL_ERROR);
         }
+        return roads;
     }
 
-    private Object getLicensePlateNumber(int carNumber) {
-        return carNumber < 10 ? "0" + carNumber : carNumber;
+    public List<Road> getRoads(String date, Integer carNumber) {
+        return roadRepository.findByYearMonthAndCarNumber(getYear(date), getMonth(date), carNumber);
     }
 
+    private Road findOne(String year, String month, Integer carNumber, Integer roadNumber) {
+        return roadRepository.findOne(year, month, carNumber, roadNumber);
+    }
+
+    private String getLicensePlateNumber(int carNumber) {
+        return carNumber < 10 ? "0" + carNumber : valueOf(carNumber);
+    }
 }

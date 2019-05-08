@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: dev
+  jpa:
+    hibernate.ddl-auto: create
+    show-sql: true
+    hibernate:
+      naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+    database-platform: com.snk.starkkrumm.config.SQLiteDialect
+
+server:
+  port: 2003
+  servlet:
+    context-path: /starkkrumm
+
+driver:
+  name: org.sqlite.JDBC
+
+db:
+  url: stark-krumm.db
+
+input:
+  xls: \\Desktop\\work\\FAZ.xls
+
+output:
+  path: \\Desktop\\work\\
