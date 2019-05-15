@@ -1,10 +1,7 @@
 package com.snk.starkkrumm.service;
 
-import com.snk.starkkrumm.model.Road;
-import lombok.RequiredArgsConstructor;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.stereotype.Service;
+import static java.lang.String.valueOf;
+import static java.lang.System.getProperty;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +9,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import static java.lang.System.getProperty;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.stereotype.Service;
+
+import com.snk.starkkrumm.model.Road;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +22,6 @@ public class ExcelCreationService {
     private final String INPUT_XLS;
     private final String OUTPUT_PATH;
     private static final String USER_HOME = "user.home";
-
 
     void createExcelFile(List<Road> roads) throws IOException {
         final FileInputStream in = new FileInputStream(getProperty(USER_HOME) + INPUT_XLS);
@@ -68,16 +69,15 @@ public class ExcelCreationService {
 
     private File createFile(int carNumber, String month) {
         return new File(getProperty(USER_HOME) + OUTPUT_PATH + month
-                + "-"
-                + getLicensePlateNumber(carNumber) + "-SNK.xls");
-    }
-
-    private Object getLicensePlateNumber(int carNumber) {
-        return carNumber < 10 ? "0" + carNumber : carNumber;
+                + "-" + getLicensePlateNumber(carNumber) + "-SNK.xls");
     }
 
     private void closeResources(FileInputStream in, FileOutputStream out) throws IOException {
         in.close();
         out.close();
+    }
+
+    String getLicensePlateNumber(int carNumber) {
+        return carNumber < 10 ? "0" + carNumber : valueOf(carNumber);
     }
 }

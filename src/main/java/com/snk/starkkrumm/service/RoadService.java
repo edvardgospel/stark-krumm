@@ -2,7 +2,6 @@ package com.snk.starkkrumm.service;
 
 import static com.snk.starkkrumm.util.RoadUtil.getMonth;
 import static com.snk.starkkrumm.util.RoadUtil.getYear;
-import static java.lang.String.valueOf;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,7 +59,7 @@ public class RoadService {
             excelCreationService.createExcelFile(roads);
             googleDriveService.uploadExcel(getMonth(date)
                     + "-"
-                    + getLicensePlateNumber(carNumber)
+                    + excelCreationService.getLicensePlateNumber(carNumber)
                     + "-SNK.xls");
         } catch (IOException e) {
             throw new ExcelCreationOrUploadException(EXCEL_ERROR);
@@ -74,9 +73,5 @@ public class RoadService {
 
     private Road findOne(String year, String month, Integer carNumber, Integer roadNumber) {
         return roadRepository.findOne(year, month, carNumber, roadNumber);
-    }
-
-    private String getLicensePlateNumber(int carNumber) {
-        return carNumber < 10 ? "0" + carNumber : valueOf(carNumber);
     }
 }
