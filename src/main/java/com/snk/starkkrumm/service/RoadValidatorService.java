@@ -44,6 +44,25 @@ public final class RoadValidatorService {
         validateConsumptions(request.getConsumption1(), request.getConsumption2(), request.getConsumption3());
     }
 
+    public void validate(String date, Integer carNumber) {
+        if (isEmpty(date) || isNull(carNumber)) {
+            log.error("Month or car number is null.");
+            throw new InvalidMonthException(REQUEST_NULL_MESSAGE);
+        }
+        validateDate(date);
+        validateCarNumber(carNumber);
+    }
+
+    public void validate(String date, Integer carNumber, Integer roadNumber) {
+        if (isEmpty(date) || isNull(carNumber) || isNull(roadNumber)) {
+            log.error("Month, car number or road number is null.");
+            throw new InvalidMonthException(REQUEST_NULL_MESSAGE);
+        }
+        validateDate(date);
+        validateRoadNumber(roadNumber);
+        validateCarNumber(carNumber);
+    }
+
     private void validateRoadNumber(Integer roadNumber) {
         if (roadNumber < 1) {
             log.error("Road number is invalid.");
@@ -96,20 +115,6 @@ public final class RoadValidatorService {
                 consumption3 < 1.0 || consumption3 >= 1000.0) {
             log.error("Consumption is invalid.");
             throw new InvalidRoadException(REQUEST_INVALID_MESSAGE);
-        }
-    }
-
-    public void validate(String month, Integer carNumber) {
-        if (isEmpty(month) || isNull(carNumber)) {
-            log.error("Month or car number is null.");
-            throw new InvalidMonthException(REQUEST_NULL_MESSAGE);
-        }
-    }
-
-    public void validate(String month, Integer carNumber, Integer roadNumber) {
-        if (isEmpty(month) || isNull(carNumber) || isNull(roadNumber)) {
-            log.error("Month, car number or road number is null.");
-            throw new InvalidMonthException(REQUEST_NULL_MESSAGE);
         }
     }
 }
