@@ -20,7 +20,7 @@ db:
   name: stark-krumm.db
 
 input:
-  xls: \Desktop\work\FAZ.xls
+  xls: FAZ.xls
 
 output:
-  path: \Desktop\work\
+  path: generated\
