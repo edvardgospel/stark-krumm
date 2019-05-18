@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,11 +69,15 @@ public class RoadService {
     }
 
     public List<Road> getRoads(String date, Integer carNumber) {
-        return roadRepository.findByYearMonthAndCarNumber(getYear(date), getMonth(date), carNumber);
+        List<Road> roads = roadRepository.findByYearMonthAndCarNumber(getYear(date), getMonth(date), carNumber);
+        Collections.sort(roads);
+        return roads;
     }
 
     private List<Road> getRoads(String year, String month, Integer carNumber) {
-        return roadRepository.findByYearMonthAndCarNumber(year, month, carNumber);
+        List<Road> roads = roadRepository.findByYearMonthAndCarNumber(year, month, carNumber);
+        Collections.sort(roads);
+        return roads;
     }
 
     private Road findOne(String year, String month, Integer carNumber, Integer roadNumber) {
