@@ -1,7 +1,10 @@
 package com.snk.starkkrumm.service;
 
-import static java.lang.String.valueOf;
-import static java.lang.System.getProperty;
+import com.snk.starkkrumm.model.Road;
+import lombok.RequiredArgsConstructor;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,28 +12,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.stereotype.Service;
-
-import com.snk.starkkrumm.model.Road;
-import lombok.RequiredArgsConstructor;
+import static java.lang.String.valueOf;
 
 @Service
 @RequiredArgsConstructor
 public class ExcelCreationService {
-    private final String INPUT_XLS;
-    private final String OUTPUT_PATH;
-    private static final String USER_HOME = "user.home";
+    private final String inputXls;
+    private final String outputPath;
 
     void createExcelFile(List<Road> roads) throws IOException {
-        final FileInputStream in = new FileInputStream(getProperty(USER_HOME) + INPUT_XLS);
+        final FileInputStream in = new FileInputStream(inputXls);
         final HSSFWorkbook workbook = new HSSFWorkbook(in);
         final HSSFSheet sheet = workbook.getSheetAt(0);
         final int carNumber = roads.get(0).getCarNumber();
         final String month = roads.get(0).getMonth();
         final String year = roads.get(0).getYear();
-        final FileOutputStream out = new FileOutputStream(createFile(carNumber, month));
+        final FileOutputStream out = new FileOutputStream(createFile(carNumber, year, month));
         int rowNumber = 11;
         int allDistance = 0;
         double allConsumption = 0.0;
@@ -67,9 +64,14 @@ public class ExcelCreationService {
         sheet.getRow(30).getCell(20).setCellValue(allConsumption / shortDistance);
     }
 
-    private File createFile(int carNumber, String month) {
-        return new File(getProperty(USER_HOME) + OUTPUT_PATH + month
+    private File createFile(int carNumber, String year, String month) throws IOException {
+        File file = new File(outputPath + "\\" + year + "-" + month
                 + "-" + getLicensePlateNumber(carNumber) + "-SNK.xls");
+        if (file.exists()) {
+            boolean delete = file.delete();
+            boolean newFile = file.createNewFile();
+        }
+        return file;
     }
 
     private void closeResources(FileInputStream in, FileOutputStream out) throws IOException {

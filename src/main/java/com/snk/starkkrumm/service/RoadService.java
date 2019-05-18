@@ -1,6 +1,7 @@
 package com.snk.starkkrumm.service;
 
-import com.snk.starkkrumm.exception.ExcelCreationOrUploadException;
+import com.snk.starkkrumm.exception.ExcelCreationException;
+import com.snk.starkkrumm.exception.ExcelUploadException;
 import com.snk.starkkrumm.exception.InvalidRoadException;
 import com.snk.starkkrumm.model.Road;
 import com.snk.starkkrumm.repository.RoadRepository;
@@ -24,7 +25,8 @@ public class RoadService {
     private final ExcelCreationService excelCreationService;
     private final RoadRepository roadRepository;
     private final GoogleDriveRequestSenderService googleDriveService;
-    private static final String EXCEL_ERROR = "Could not create or upload excel files";
+    private static final String EXCEL_CREATION_ERROR = "Could not create excel files.";
+    private static final String EXCEL_UPLOAD_ERROR = "Could not upload excel files.";
 
     public List<Road> save(Road road) {
         Road existingRoad = findOne(road.getYear(), road.getMonth(), road.getCarNumber(), road.getRoadNumber());
@@ -58,12 +60,16 @@ public class RoadService {
         }
         try {
             excelCreationService.createExcelFile(roads);
+        } catch (IOException e) {
+            throw new ExcelCreationException(EXCEL_CREATION_ERROR);
+        }
+        try {
             googleDriveService.uploadExcel(getMonth(date)
                     + "-"
                     + excelCreationService.getLicensePlateNumber(carNumber)
                     + "-SNK.xls");
         } catch (IOException e) {
-            throw new ExcelCreationOrUploadException(EXCEL_ERROR);
+            throw new ExcelUploadException(EXCEL_UPLOAD_ERROR);
         }
         return roads;
     }

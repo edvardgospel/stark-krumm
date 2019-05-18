@@ -23,4 +23,4 @@ input:
   xls: FAZ.xls
 
 output:
-  path: generated\
+  path: C:\Users\Edvárd\Desktop
