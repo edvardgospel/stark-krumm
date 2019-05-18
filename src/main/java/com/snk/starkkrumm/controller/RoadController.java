@@ -24,11 +24,8 @@ public class RoadController {
     private final RoadService roadService;
 
     @PostMapping("/road")
-    public void saveRoad(@RequestBody RoadRequest roadRequest, BindingResult bindingResult) {
+    public void saveRoad(@RequestBody RoadRequest roadRequest) {
         log.info("saveRoad endpoint called with RoadRequest: {}", roadRequest);
-        if (bindingResult.hasErrors()) {
-            throw new InvalidRoadException(REQUEST_NULL_MESSAGE);
-        }
         validatorService.validate(roadRequest);
         roadService.save(transform(roadRequest));
     }
