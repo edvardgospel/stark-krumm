@@ -17,8 +17,8 @@ public class AppConfig {
     @Value("${db.path}")
     private String dbPath;
 
-    @Value("${db.url}")
-    private String dbUrl;
+    @Value("${db.name}")
+    private String dbName;
 
     @Value("${input.xls}")
     private String inputXls;
@@ -31,7 +31,7 @@ public class AppConfig {
         return DataSourceBuilder
                 .create()
                 .driverClassName(driverClassName)
-                .url("jdbc:sqlite:" + dbPath + dbUrl)
+                .url("jdbc:sqlite:" + dbPath + dbName)
                 .build();
     }
 
