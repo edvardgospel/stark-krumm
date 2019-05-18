@@ -1,21 +1,20 @@
 package com.snk.starkkrumm.service;
 
-import static com.snk.starkkrumm.util.RoadUtil.getMonth;
-import static com.snk.starkkrumm.util.RoadUtil.getYear;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
-
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
 import com.snk.starkkrumm.exception.ExcelCreationOrUploadException;
 import com.snk.starkkrumm.exception.InvalidRoadException;
 import com.snk.starkkrumm.model.Road;
 import com.snk.starkkrumm.repository.RoadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+
+import static com.snk.starkkrumm.util.RoadUtil.getMonth;
+import static com.snk.starkkrumm.util.RoadUtil.getYear;
 
 @Slf4j
 @Service
@@ -26,11 +25,12 @@ public class RoadService {
     private final GoogleDriveRequestSenderService googleDriveService;
     private static final String EXCEL_ERROR = "Could not create or upload excel files";
 
-    public void save(Road road) {
+    public List<Road> save(Road road) {
         Road existingRoad = findOne(road.getYear(), road.getMonth(), road.getCarNumber(), road.getRoadNumber());
         if (Objects.isNull(existingRoad)) {
             roadRepository.save(road);
             log.info("Road saved successfully.");
+            return getRoads(road.getYear(), road.getMonth(), road.getCarNumber());
         } else {
             log.warn("Road already exists!");
             throw new InvalidRoadException("Invalid road.");
@@ -69,6 +69,10 @@ public class RoadService {
 
     public List<Road> getRoads(String date, Integer carNumber) {
         return roadRepository.findByYearMonthAndCarNumber(getYear(date), getMonth(date), carNumber);
+    }
+
+    private List<Road> getRoads(String year, String month, Integer carNumber) {
+        return roadRepository.findByYearMonthAndCarNumber(year, month, carNumber);
     }
 
     private Road findOne(String year, String month, Integer carNumber, Integer roadNumber) {

@@ -1,18 +1,15 @@
 package com.snk.starkkrumm.controller;
 
-import com.snk.starkkrumm.exception.InvalidRoadException;
 import com.snk.starkkrumm.model.Road;
 import com.snk.starkkrumm.model.RoadRequest;
 import com.snk.starkkrumm.service.RoadService;
 import com.snk.starkkrumm.service.RoadValidatorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.snk.starkkrumm.service.RoadValidatorService.REQUEST_NULL_MESSAGE;
 import static com.snk.starkkrumm.service.transformer.RoadTransformer.transform;
 
 @Slf4j
@@ -24,10 +21,10 @@ public class RoadController {
     private final RoadService roadService;
 
     @PostMapping("/road")
-    public void saveRoad(@RequestBody RoadRequest roadRequest) {
+    public List<Road> saveRoad(@RequestBody RoadRequest roadRequest) {
         log.info("saveRoad endpoint called with RoadRequest: {}", roadRequest);
         validatorService.validate(roadRequest);
-        roadService.save(transform(roadRequest));
+        return roadService.save(transform(roadRequest));
     }
 
     @GetMapping("/road")
