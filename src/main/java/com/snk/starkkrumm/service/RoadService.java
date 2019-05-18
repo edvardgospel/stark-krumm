@@ -56,7 +56,7 @@ public class RoadService {
         List<Road> roads = getRoads(date, carNumber);
         if (CollectionUtils.isEmpty(roads)) {
             log.warn("Null or empty road list");
-            throw new InvalidRoadException("Invalid road.");
+            throw new InvalidRoadException("No roads were found.");
         }
         try {
             excelCreationService.createExcelFile(roads);
@@ -64,10 +64,8 @@ public class RoadService {
             throw new ExcelCreationException(EXCEL_CREATION_ERROR);
         }
         try {
-            googleDriveService.uploadExcel(getMonth(date)
-                    + "-"
-                    + excelCreationService.getLicensePlateNumber(carNumber)
-                    + "-SNK.xls");
+            googleDriveService.uploadExcel(getYear(date) + "-" + getMonth(date) + "-" +
+                    excelCreationService.getLicensePlateNumber(carNumber) + "-SNK.xls");
         } catch (IOException e) {
             throw new ExcelUploadException(EXCEL_UPLOAD_ERROR);
         }

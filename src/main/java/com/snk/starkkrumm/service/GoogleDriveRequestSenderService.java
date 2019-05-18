@@ -12,15 +12,14 @@ import java.io.IOException;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-class GoogleDriveRequestSenderService {
+public class GoogleDriveRequestSenderService {
 
     private final Drive drive;
+    private final String outputPath;
 
     void uploadExcel(String fileName) throws IOException {
-        File fileMetadata = new File().setName(fileName);//e.g.:"IAN-08-SNK.xls"
-        java.io.File filePath = new java.io.File(System.getProperty("user.home")
-                + "\\Desktop\\work\\"
-                + fileName);
+        File fileMetadata = new File().setName(fileName);//e.g.:"2019-IAN-08-SNK.xls"
+        java.io.File filePath = new java.io.File(outputPath + "\\" + fileName);
         FileContent mediaContent = new FileContent("application/vnd.ms-excel", filePath);
         drive.files()
                 .create(fileMetadata, mediaContent)

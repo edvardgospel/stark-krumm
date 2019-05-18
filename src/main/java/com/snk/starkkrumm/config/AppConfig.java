@@ -1,6 +1,8 @@
 package com.snk.starkkrumm.config;
 
+import com.google.api.services.drive.Drive;
 import com.snk.starkkrumm.service.ExcelCreationService;
+import com.snk.starkkrumm.service.GoogleDriveRequestSenderService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +26,7 @@ public class AppConfig {
     private String inputXls;
 
     @Value("${output.path}")
-    String outputPath;
+    public String outputPath;
 
     @Bean
     public DataSource dataSource() {
@@ -40,5 +42,10 @@ public class AppConfig {
         return new ExcelCreationService(inputXls, outputPath);
     }
 
+    @Bean
+    public GoogleDriveRequestSenderService googleDriveRequestSenderService(Drive drive) {
+        return new GoogleDriveRequestSenderService(drive, outputPath);
+
+    }
 
 }
