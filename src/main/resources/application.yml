@@ -16,7 +16,8 @@ driver:
   name: org.sqlite.JDBC
 
 db:
-  url: stark-krumm.db
+  path:
+  name: stark-krumm.db
 
 input:
   xls: \\Desktop\\work\\FAZ.xls

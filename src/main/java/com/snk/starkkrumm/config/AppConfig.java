@@ -14,22 +14,29 @@ public class AppConfig {
     @Value("${driver.name}")
     private String driverClassName;
 
+    @Value("${db.path}")
+    private String dbPath;
+
     @Value("${db.url}")
     private String dbUrl;
 
+    @Value("${input.xls}")
+    private String inputXls;
+
+    @Value("${output.path}")
+    String outputPath;
 
     @Bean
     public DataSource dataSource() {
         return DataSourceBuilder
                 .create()
                 .driverClassName(driverClassName)
-                .url("jdbc:sqlite:" /*+ System.getProperty("user.home")*/ + dbUrl)
+                .url("jdbc:sqlite:" + dbPath + dbUrl)
                 .build();
     }
 
     @Bean
-    public ExcelCreationService excelCreationService(@Value("${input.xls}") String inputXls,
-                                                     @Value("${output.path}") String outputPath) {
+    public ExcelCreationService excelCreationService() {
         return new ExcelCreationService(inputXls, outputPath);
     }
 
