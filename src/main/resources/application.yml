@@ -16,11 +16,11 @@ driver:
   name: org.sqlite.JDBC
 
 db:
-  path:
+  path: C:\Users\Edvárd\Desktop
   name: stark-krumm.db
 
 input:
-  xls: \\Desktop\\work\\FAZ.xls
+  xls: \Desktop\work\FAZ.xls
 
 output:
-  path: \\Desktop\\work\\
+  path: \Desktop\work\
