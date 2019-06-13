@@ -111,7 +111,7 @@ public final class RoadValidatorService {
     private void validateConsumptions(Double consumption1, Double consumption2, Double consumption3) {
         if (consumption1 < 1.0 || consumption1 >= 1000.0 ||
                 consumption2 < 1.0 || consumption2 >= 1000.0 ||
-                consumption3 < 1.0 || consumption3 >= 1000.0) {
+                consumption3 < 0.0 || consumption3 >= 1000.0) {
             log.error("Consumption is invalid.");
             throw new InvalidRoadException(REQUEST_INVALID_MESSAGE);
         }
