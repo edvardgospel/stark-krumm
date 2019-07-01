@@ -100,9 +100,9 @@ public final class RoadValidatorService {
     private void validateDistances(Integer distanceBig, Integer distanceSmall) {
         if (distanceSmall >= distanceBig ||
                 distanceBig < 1 ||
-                distanceBig > 9999 ||
+                distanceBig > 9999999 ||
                 distanceSmall < 1 ||
-                distanceSmall > 9998) {
+                distanceSmall > 9999998) {
             log.error("Distance is invalid.");
             throw new InvalidRoadException(REQUEST_INVALID_MESSAGE);
         }
