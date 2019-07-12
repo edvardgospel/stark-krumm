@@ -20,7 +20,7 @@ public final class RoadValidatorService {
     private static final String DEPARTURE_ARRIVAL_REGEX = "^(0[1-9]|[12][0-9]|3[01])\\.(0[0-9]|1[0-9]|2[0-3])\\.(0[0-9]|[1-5][0-9])$";
     private static final String DATE_REGEX = "^20[1-9][0-9]-(IAN|FEB|MAR|APR|MAI|IUN|IUL|AUG|SEP|OCT|NOV|DEC)$";
 
-    @Value("${secret.client-secret")
+    @Value("${secret.client-secret}")
     public String clientSecret;
 
     public void validate(RoadRequest request) {
@@ -69,6 +69,7 @@ public final class RoadValidatorService {
 
     public void validate(String secret) {
         if (!clientSecret.equals(secret)) {
+            log.info("Client secret is invalid: {}", secret);
             throw new InvalidRequestException();
         }
     }
