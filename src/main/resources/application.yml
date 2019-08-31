@@ -23,7 +23,7 @@ input:
   xls: FAZ.xls
 
 output:
-  path: C:/UsersEdvárd/Desktop #/home/pi
+  path: C:/Users/Edvárd/Desktop #/home/pi
 
 secret:
   client-secret:
