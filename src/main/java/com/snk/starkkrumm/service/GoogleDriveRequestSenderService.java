@@ -19,7 +19,7 @@ public class GoogleDriveRequestSenderService {
 
     void uploadExcel(String fileName) throws IOException {
         File fileMetadata = new File().setName(fileName);//e.g.:"2019-IAN-08-SNK.xls"
-        java.io.File filePath = new java.io.File(outputPath + "\\" + fileName);
+        java.io.File filePath = new java.io.File(outputPath + "/" + fileName);
         FileContent mediaContent = new FileContent("application/vnd.ms-excel", filePath);
         drive.files()
                 .create(fileMetadata, mediaContent)

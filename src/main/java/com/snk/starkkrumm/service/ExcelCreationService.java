@@ -65,7 +65,7 @@ public class ExcelCreationService {
     }
 
     private File createFile(int carNumber, String year, String month) throws IOException {
-        File file = new File(outputPath + "\\" + year + "-" + month
+        File file = new File(outputPath + "/" + year + "-" + month
                 + "-" + getLicensePlateNumber(carNumber) + "-SNK.xls");
         if (file.exists()) {
             boolean delete = file.delete();

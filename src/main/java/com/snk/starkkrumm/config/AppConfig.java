@@ -33,7 +33,7 @@ public class AppConfig {
         return DataSourceBuilder
                 .create()
                 .driverClassName(driverClassName)
-                .url("jdbc:sqlite:" + dbPath + "\\" + dbName)
+                .url("jdbc:sqlite:" + dbPath + "/" + dbName)
                 .build();
     }
 

@@ -16,14 +16,17 @@ driver:
   name: org.sqlite.JDBC
 
 db:
-  path: C:\Users\Edvárd\Desktop
+  path: C:/Users/Edvárd/Desktop #/home/pi
   name: stark-krumm.db
 
 input:
   xls: FAZ.xls
 
 output:
-  path: C:\Users\Edvárd\Desktop
+  path: C:/UsersEdvárd/Desktop #/home/pi
 
 secret:
   client-secret:
+
+logging:
+  file: stark-krumm.log
