@@ -38,6 +38,9 @@ public final class RoadValidatorService {
             log.error("RoadRequest is null.");
             throw new InvalidRoadException(REQUEST_NULL_MESSAGE);
         }
+        if (isNull(request.getConsumption3())) {
+            request.setConsumption3(0.0);
+        }
         validateRoadNumber(request.getRoadNumber());
         validateCarNumber(request.getCarNumber());
         validateDriverName(request.getDriverName());
