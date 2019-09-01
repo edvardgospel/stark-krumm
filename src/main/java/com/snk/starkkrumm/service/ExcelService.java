@@ -47,7 +47,7 @@ public class ExcelService {
     void deleteExcelFile(String fileName) {
         File file = new File(outputPath + "/" + fileName);
         if (file.exists()) {
-            file.delete()
+            boolean delete = file.delete();
         }
     }
 
