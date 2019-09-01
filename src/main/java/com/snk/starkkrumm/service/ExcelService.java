@@ -16,7 +16,7 @@ import static java.lang.String.valueOf;
 
 @Service
 @RequiredArgsConstructor
-public class ExcelCreationService {
+public class ExcelService {
     private final String inputXls;
     private final String outputPath;
 
@@ -42,6 +42,13 @@ public class ExcelCreationService {
         insertAdditionalDataToExcel(sheet, carNumber, month, year, allConsumption, shortDistance);
         workbook.write(out);
         closeResources(in, out);
+    }
+
+    void deleteExcelFile(String fileName) {
+        File file = new File(outputPath + "/" + fileName);
+        if (file.exists()) {
+            file.delete()
+        }
     }
 
     private void insertRowToExcel(HSSFSheet sheet, int rowNumber, Road road) {

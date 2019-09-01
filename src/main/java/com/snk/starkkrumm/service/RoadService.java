@@ -22,7 +22,7 @@ import static com.snk.starkkrumm.util.RoadUtil.getYear;
 @Service
 @RequiredArgsConstructor
 public class RoadService {
-    private final ExcelCreationService excelCreationService;
+    private final ExcelService excelService;
     private final RoadRepository roadRepository;
     private final GoogleDriveRequestSenderService googleDriveService;
     private static final String EXCEL_CREATION_ERROR = "Could not create excel files.";
@@ -59,16 +59,16 @@ public class RoadService {
             throw new InvalidRoadException("No roads were found.");
         }
         try {
-            excelCreationService.createExcelFile(roads);
+            excelService.createExcelFile(roads);
         } catch (IOException e) {
             throw new ExcelCreationException(EXCEL_CREATION_ERROR);
         }
         try {
-            googleDriveService.uploadExcel(getYear(date) + "-" + getMonth(date) + "-" +
-                    excelCreationService.getLicensePlateNumber(carNumber) + "-SNK.xls");
+            googleDriveService.uploadExcel(getFileName(date, carNumber));
         } catch (IOException e) {
             throw new ExcelUploadException(EXCEL_UPLOAD_ERROR);
         }
+        excelService.deleteExcelFile(getFileName(date, carNumber));
         return roads;
     }
 
@@ -86,5 +86,10 @@ public class RoadService {
 
     private Road findOne(String year, String month, Integer carNumber, Integer roadNumber) {
         return roadRepository.findOne(year, month, carNumber, roadNumber);
+    }
+
+    private String getFileName(String date, Integer carNumber) {
+        return getYear(date) + "-" + getMonth(date) + "-" +
+                excelService.getLicensePlateNumber(carNumber) + "-SNK.xls";
     }
 }
