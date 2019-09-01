@@ -34,8 +34,7 @@ public final class RoadValidatorService {
                 isNull(request.getDistanceBig()) ||
                 isNull(request.getDistanceSmall()) ||
                 isNull(request.getConsumption1()) ||
-                isNull(request.getConsumption2()) ||
-                isNull(request.getConsumption3())) {
+                isNull(request.getConsumption2())) {
             log.error("RoadRequest is null.");
             throw new InvalidRoadException(REQUEST_NULL_MESSAGE);
         }
