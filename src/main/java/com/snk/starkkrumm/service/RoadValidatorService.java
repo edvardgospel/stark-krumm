@@ -18,10 +18,10 @@ public final class RoadValidatorService {
     private static final String REQUEST_INVALID_MESSAGE = "Invalid request.";
     private static final String DRIVER_NAME_REGEX = "[a-zA-Z ]*";
     private static final String DEPARTURE_ARRIVAL_REGEX = "^(0[1-9]|[12][0-9]|3[01])\\.(0[0-9]|1[0-9]|2[0-3])\\.(0[0-9]|[1-5][0-9])$";
-    private static final String DATE_REGEX = "^20[1-9][0-9]-(IAN|FEB|MAR|APR|MAI|IUN|IUL|AUG|SEP|OCT|NOV|DEC)$";
+    private static final String DATE_REGEX = "^20[1-9][0-9]-(IAN|FEB|MAR|APR|MAI|IUN|IUL|AUG|SEP|OCT|NOI|DEC)$";
 
     @Value("${secret.client-secret}")
-    public String clientSecret;
+    private String clientSecret;
 
     public void validate(RoadRequest request) {
         if (isNull(request) ||
@@ -116,7 +116,7 @@ public final class RoadValidatorService {
                 distanceBig < 1 ||
                 distanceBig > 9999999 ||
                 distanceSmall < 1 ||
-                distanceSmall > 9999998) {
+                distanceSmall > 9999997) {
             log.error("Distance is invalid.");
             throw new InvalidRoadException(REQUEST_INVALID_MESSAGE);
         }
